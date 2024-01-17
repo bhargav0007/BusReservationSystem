@@ -30,11 +30,11 @@ namespace BusReservationSystem.Controllers
             return "value";
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] BusModel bus)
+        [HttpPost(nameof(PostBus))]
+        public async Task<IActionResult> PostBus([FromBody] BusModel bus)
         {
             var result = await _busService.AddData(bus);
-            return CreatedAtAction("Create Bus", result);
+            return CreatedAtAction(nameof(PostBus), result);
         }
 
         [HttpPut("{id}")]

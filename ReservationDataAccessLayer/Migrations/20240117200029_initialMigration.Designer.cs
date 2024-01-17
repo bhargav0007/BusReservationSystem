@@ -12,8 +12,8 @@ using ReservationDataAccessLayer;
 namespace ReservationDataAccessLayer.Migrations
 {
     [DbContext(typeof(ReservationDbContext))]
-    [Migration("20240112193117_InitialCommit_ReservationSystem")]
-    partial class InitialCommit_ReservationSystem
+    [Migration("20240117200029_initialMigration")]
+    partial class initialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -192,7 +192,6 @@ namespace ReservationDataAccessLayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")

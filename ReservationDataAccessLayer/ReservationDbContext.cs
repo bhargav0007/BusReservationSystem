@@ -29,28 +29,28 @@ namespace ReservationDataAccessLayer
                 HasKey(x => x.Id);
             modelBuilder.Entity<User>().Property(x => x.Id).IsRequired().ValueGeneratedOnAdd();
             modelBuilder.Entity<User>().Property(x => x.Age).IsRequired().HasMaxLength(100);
+            modelBuilder.Entity<User>().HasMany(x => x.Bookings).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Bus>().
                 HasKey(x => x.Id);
             modelBuilder.Entity<Bus>().Property(x => x.Id).IsRequired().ValueGeneratedOnAdd();
+            modelBuilder.Entity<Bus>().HasMany(x => x.Schedules).WithOne(c => c.Bus).HasForeignKey(x => x.BusId).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Bus>().HasMany(x => x.Bookings).WithOne(x => x.Bus).HasForeignKey(x => x.BusId).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Route>().
                 HasKey(x => x.Id);
             modelBuilder.Entity<Route>().Property(x => x.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Route>().HasMany(x => x.Schedules).WithOne(x => x.Route).HasForeignKey(x => x.RouteId).OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Schedule>().
                 HasKey(x => x.Id);
-            modelBuilder.Entity<Schedule>().Property(x => x.Id).ValueGeneratedOnAdd() ;
-            modelBuilder.Entity<Schedule>().HasOne(x => x.Bus).WithMany(x => x.Schedules).HasForeignKey(x => x.BusId).OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Schedule>().HasOne(x => x.Route).WithMany(x => x.Schedules).HasForeignKey(x => x.RouteId).OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Schedule>().Property(x => x.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<Schedule>().HasMany(x => x.Bookings).WithOne(x => x.Schedule).HasForeignKey(x => x.ScheduleId).OnDelete(DeleteBehavior.NoAction);
 
 
             modelBuilder.Entity<Booking>().
                HasKey(x => x.Id);
             modelBuilder.Entity<Booking>().Property(x => x.Id).ValueGeneratedOnAdd();
-            modelBuilder.Entity<Booking>().HasOne(x => x.Bus).WithMany(x => x.Bookings).HasForeignKey(x => x.BusId).OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Booking>().HasOne(x => x.User).WithMany(x => x.Bookings).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.NoAction);
-            modelBuilder.Entity<Booking>().HasOne(x => x.Schedule).WithMany(x => x.Bookings).HasForeignKey(x => x.ScheduleId).OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
