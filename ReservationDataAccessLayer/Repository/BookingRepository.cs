@@ -12,7 +12,7 @@ namespace ReservationDataAccessLayer.Repository
     {
         private readonly ReservationDbContext _context;
 
-        public BookingRepository(ReservationDbContext context) {  _context = context; }
+        public BookingRepository(ReservationDbContext context) { _context = context; }
         public Task<Booking> AddData(Booking data)
         {
             throw new NotImplementedException();
@@ -25,7 +25,7 @@ namespace ReservationDataAccessLayer.Repository
 
         public async Task<IEnumerable<Booking>> GetAllData()
         {
-            return await _context.Bookings.ToListAsync();
+            return await _context.Bookings.Include(x => x.Bus).Include(x => x.User).Include(x => x.Schedule).ToListAsync();
         }
 
         public Task<Booking> GetById(long Id)

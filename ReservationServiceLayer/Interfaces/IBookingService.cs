@@ -10,7 +10,7 @@ namespace ReservationServiceLayer.Interfaces
 {
     public interface IBookingService
     {
-        Task<IEnumerable<Booking>> GetAllData();
+        Task<IEnumerable<BookingModel>> GetAllData();
         Task<Booking> GetById(long Id);
         Task<Booking> AddData(Booking data);
         Task<bool> UpdateData(Booking data);

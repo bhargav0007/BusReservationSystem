@@ -1,6 +1,9 @@
-﻿using ReservationDataAccessLayer;
+﻿using AutoMapper;
+using ReservationCommon.Interface;
+using ReservationDataAccessLayer;
 using ReservationDataAccessLayer.Models;
 using ReservationServiceLayer.Interfaces;
+using ReservationServiceLayer.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +16,12 @@ namespace ReservationServiceLayer
     {
         private readonly ReservationFactory _reservationFactory;
         private readonly IRepository<Booking> _bookingRepository;
-        public BookingService(ReservationFactory reservationFactory) 
+        private readonly IMapper<Booking, BookingModel> _mapper;
+        public BookingService(ReservationFactory reservationFactory,IMapper<Booking,BookingModel> mapper) 
         {
             _reservationFactory = reservationFactory;
             _bookingRepository = _reservationFactory.CreateRepository<Booking>();
+            _mapper = mapper;
         }
         public Task<Booking> AddData(Booking data)
         {
@@ -28,9 +33,10 @@ namespace ReservationServiceLayer
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<Booking>> GetAllData()
+        public async Task<IEnumerable<BookingModel>> GetAllData()
         {
-            return _bookingRepository.GetAllData();
+            var result = await _bookingRepository.GetAllData();
+            return _mapper.Maps(result);
         }
 
         public Task<Booking> GetById(long Id)

@@ -20,7 +20,6 @@ builder.Services.AddDbContext<ReservationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=BookingReservationSystem;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False"));
 });
-
 builder.Services.AddTransient<ReservationFactory>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IBusService, BusService>();
@@ -32,6 +31,7 @@ builder.Services.AddTransient<IRepository<User>, UserRepository>();
 
 builder.Services.AddTransient<IMapper<User, UserModel>, UserMapper>();
 builder.Services.AddTransient<IMapper<Bus, BusModel>, BusMapper>();
+builder.Services.AddTransient<IMapper<Booking, BookingModel>, BookingMapper>();
 
 var app = builder.Build();
 
