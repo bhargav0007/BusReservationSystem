@@ -22,6 +22,14 @@ namespace ReservationDataAccessLayer
             {
                 return new BusRepository(_context) as IRepository<T>;
             }
+            if (typeof(T) == typeof(Route)) 
+            {
+                return new RouteRepository(_context) as IRepository<T>;
+            }
+            if (typeof(T) == typeof(Booking)) 
+            {
+                return new BookingRepository(_context) as IRepository<T>;
+            }
             throw new InvalidOperationException();
         }
 

@@ -24,9 +24,12 @@ builder.Services.AddDbContext<ReservationDbContext>(options =>
 builder.Services.AddTransient<ReservationFactory>();
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IBusService, BusService>();
-builder.Services.AddTransient<IRepository<Bus>, BusRepository>();
+builder.Services.AddTransient<IBookingService, BookingService>();
 
+builder.Services.AddTransient<IRepository<Bus>, BusRepository>();
+builder.Services.AddTransient<IRepository<Booking>, BookingRepository>();
 builder.Services.AddTransient<IRepository<User>, UserRepository>();
+
 builder.Services.AddTransient<IMapper<User, UserModel>, UserMapper>();
 builder.Services.AddTransient<IMapper<Bus, BusModel>, BusMapper>();
 

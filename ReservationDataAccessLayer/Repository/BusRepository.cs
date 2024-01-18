@@ -22,9 +22,17 @@ namespace ReservationDataAccessLayer.Repository
             return data;
         }
 
-        public Task<bool> DeleteData(long id)
+        public async Task<bool> DeleteData(long id)
         {
-            throw new NotImplementedException();
+            var data = await _context.Buss.FirstOrDefaultAsync(x => x.Id == id);
+            if (data != null)
+            {
+                _context.Remove(data);
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
+
         }
 
         public async Task<IEnumerable<Bus>> GetAllData()
@@ -32,14 +40,22 @@ namespace ReservationDataAccessLayer.Repository
             return await _context.Buss.ToListAsync();
         }
 
-        public Task<Bus> GetById(long Id)
+        public async Task<Bus> GetById(long Id)
         {
-            throw new NotImplementedException();
+            var result = await _context.Buss.FirstOrDefaultAsync(x => x.Id == Id);
+            return result;
         }
 
-        public Task<bool> UpdateData(Bus data)
+        public async Task<bool> UpdateData(Bus data)
         {
-            throw new NotImplementedException();
+            var bus = await GetById(data.Id);
+            if (bus != null)
+            {
+                _context.Entry(data).State = EntityState.Modified;
+                _context.SaveChanges();
+                return true;
+            }
+            return false;
         }
     }
 }

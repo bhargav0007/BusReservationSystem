@@ -3,11 +3,7 @@ using ReservationDataAccessLayer;
 using ReservationDataAccessLayer.Models;
 using ReservationServiceLayer.Interfaces;
 using ReservationServiceLayer.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ReservationServiceLayer
 {
@@ -30,9 +26,9 @@ namespace ReservationServiceLayer
             return await _busRepository.AddData(busData);
         }
 
-        public Task<bool> DeleteData(long id)
+        public async Task<bool> DeleteData(long id)
         {
-            throw new NotImplementedException();
+            return await _busRepository.DeleteData(id);
         }
 
         public async Task<IEnumerable<BusModel>> GetAllData()
@@ -41,14 +37,17 @@ namespace ReservationServiceLayer
             return _busMapper.Maps(result);
         }
 
-        public Task<BusModel> GetById(long Id)
+        public async Task<BusModel> GetById(long Id)
         {
-            throw new NotImplementedException();
+            var result = await _busRepository.GetById(Id);
+            return _busMapper.Map(result);
         }
 
-        public Task<bool> UpdateData(Bus data)
+        public async Task<bool> UpdateData(long id,BusModel data)
         {
-            throw new NotImplementedException();
+            var result = _busMapper.Map(data);
+            return await _busRepository.UpdateData(result);
+
         }
     }
 }
